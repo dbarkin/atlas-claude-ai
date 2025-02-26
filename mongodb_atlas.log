@@ -1,0 +1,59 @@
+2025-02-26 12:55:43,841 - mongodb_atlas - INFO - Creating project: test
+2025-02-26 12:55:43,842 - mongodb_atlas - ERROR - MongoDB Atlas API keys not found in environment variables
+2025-02-26 12:56:13,229 - mongodb_atlas - INFO - Creating project: test
+2025-02-26 12:56:13,765 - mongodb_atlas - ERROR - Failed to create project. Status code: 400, Response: {"detail":"Received JSON for the orgId attribute does not match expected format.","error":400,"errorCode":"INVALID_JSON_ATTRIBUTE","parameters":["orgId"],"reason":"Bad Request"}
+2025-02-26 13:04:15,413 - mongodb_atlas - INFO - Creating project: test
+2025-02-26 13:04:15,958 - mongodb_atlas - ERROR - Failed to create project. Status code: 400, Response: {"detail":"Received JSON for the orgId attribute does not match expected format.","error":400,"errorCode":"INVALID_JSON_ATTRIBUTE","parameters":["orgId"],"reason":"Bad Request"}
+2025-02-26 13:50:05,603 - mongodb_atlas - INFO - Fetching organizations
+2025-02-26 13:50:06,189 - mongodb_atlas - INFO - Successfully fetched 1 organizations
+2025-02-26 13:50:25,217 - mongodb_atlas - INFO - Creating project: test
+2025-02-26 13:50:25,217 - mongodb_atlas - INFO - Fetching organizations
+2025-02-26 13:50:25,758 - mongodb_atlas - INFO - Successfully fetched 1 organizations
+2025-02-26 13:50:25,763 - mongodb_atlas - INFO - Using organization ID: 61d6fd52ac6e92124c4d01ed
+2025-02-26 13:50:28,675 - mongodb_atlas - INFO - Project created successfully with ID: 67bf627255a2c8742205f583
+2025-02-26 13:51:16,693 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 13:51:17,305 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute providerSettings specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["providerSettings"],"reason":"Bad Request"}
+2025-02-26 13:59:47,698 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 13:59:48,279 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute providerSettings specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["providerSettings"],"reason":"Bad Request"}
+2025-02-26 14:07:17,691 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:07:18,288 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute providerSettings specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["providerSettings"],"reason":"Bad Request"}
+2025-02-26 14:26:06,087 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:26:06,705 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute clusterTier specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["clusterTier"],"reason":"Bad Request"}
+2025-02-26 14:26:32,208 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:26:32,757 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute clusterTier specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["clusterTier"],"reason":"Bad Request"}
+2025-02-26 14:34:17,690 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:34:18,251 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute numShards specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["numShards"],"reason":"Bad Request"}
+2025-02-26 14:35:45,047 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:35:45,586 - mongodb_atlas - ERROR - Failed to create cluster. Status code: 400, Response: {"detail":"Invalid attribute advancedRegionConfigs specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["advancedRegionConfigs"],"reason":"Bad Request"}
+2025-02-26 14:36:12,597 - mongodb_atlas - INFO - Creating cluster: clustertest01 in project: 67bf627255a2c8742205f583
+2025-02-26 14:36:13,971 - mongodb_atlas - INFO - Cluster creation initiated successfully
+2025-02-26 14:36:44,565 - mongodb_atlas - INFO - Waiting for cluster to be ready. Current status: CREATING, Attempt: 1/30
+2025-02-26 14:37:15,186 - mongodb_atlas - INFO - Waiting for cluster to be ready. Current status: CREATING, Attempt: 2/30
+2025-02-26 14:37:45,790 - mongodb_atlas - INFO - Waiting for cluster to be ready. Current status: CREATING, Attempt: 3/30
+2025-02-26 14:38:16,355 - mongodb_atlas - INFO - Waiting for cluster to be ready. Current status: CREATING, Attempt: 4/30
+2025-02-26 14:38:47,615 - mongodb_atlas - INFO - Database user created successfully
+2025-02-26 14:38:47,616 - mongodb_atlas - INFO - Cluster created successfully. Connection string: mongodb+srv://admin:Password1@clustertest01.mongodb.net
+2025-02-26 15:45:28,612 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 15:45:29,243 - mongodb_atlas - ERROR - Failed to create paid cluster. Status code: 400, Response: {"detail":"Invalid attribute providerSettings specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["providerSettings"],"reason":"Bad Request"}
+2025-02-26 15:52:12,714 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 15:52:13,425 - mongodb_atlas - ERROR - Failed to create paid cluster. Status code: 400, Response: {"detail":"Invalid attribute numShards specified.","error":400,"errorCode":"INVALID_ATTRIBUTE","parameters":["numShards"],"reason":"Bad Request"}
+2025-02-26 15:53:27,977 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 15:53:29,032 - mongodb_atlas - INFO - Paid cluster creation initiated successfully
+2025-02-26 15:53:59,595 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 1/60
+2025-02-26 15:54:30,189 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 2/60
+2025-02-26 15:55:00,836 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 3/60
+2025-02-26 15:55:31,432 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 4/60
+2025-02-26 15:56:02,010 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 5/60
+2025-02-26 15:56:32,602 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 6/60
+2025-02-26 15:57:03,182 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 7/60
+2025-02-26 15:57:33,771 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 8/60
+2025-02-26 15:58:04,354 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 9/60
+2025-02-26 15:58:34,950 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 10/60
+2025-02-26 15:59:05,517 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 11/60
+2025-02-26 15:59:36,127 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 12/60
+2025-02-26 16:00:06,734 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 13/60
+2025-02-26 16:00:37,367 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 14/60
+2025-02-26 16:01:07,999 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 15/60
+2025-02-26 16:01:38,594 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 16/60
+2025-02-26 16:02:09,215 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 17/60
+2025-02-26 16:02:41,263 - mongodb_atlas - ERROR - Failed to create database user. Status code: 409, Response: {"detail":"A user with username admin already exists.","error":409,"errorCode":"USER_ALREADY_EXISTS","parameters":["admin"],"reason":"Conflict"}
