@@ -26,11 +26,32 @@ ATLAS_PUBLIC_KEY = os.getenv("ATLAS_PUBLIC_KEY")
 ATLAS_PRIVATE_KEY = os.getenv("ATLAS_PRIVATE_KEY")
 ATLAS_BASE_URL = "https://cloud.mongodb.com/api/atlas/v2"
 
+# Default database user credentials - using environment variables with defaults
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")  
+
 # Headers for the API requests
 HEADERS = {
     "Accept": "application/vnd.atlas.2025-02-19+json",
     "Content-Type": "application/json"
 }
+
+# Helper function to mask sensitive info in connection strings for logging
+def mask_connection_string(connection_string):
+    """
+    Masks passwords in connection strings for safe logging
+    
+    Args:
+        connection_string (str): The connection string that may contain credentials
+        
+    Returns:
+        str: The masked connection string with password replaced by asterisks
+    """
+    if not connection_string:
+        return connection_string
+        
+    # Use regex to replace password
+    return re.sub(r'(mongodb\+srv://[^:]+:)([^@]+)(@.*)', r'\1*****\3', connection_string)
 
 def get_cluster_connection_string(project_id, cluster_name):
     """
@@ -61,9 +82,11 @@ def get_cluster_connection_string(project_id, cluster_name):
                 # Replace the default username with admin and add the password
                 if "://" in srv_string:
                     parts = srv_string.split("://")
-                    srv_string = f"{parts[0]}://admin:Password1@{parts[1]}"
+                    srv_string = f"{parts[0]}://{DB_USER}:{DB_PASSWORD}@{parts[1]}"
                 
                 logger.info(f"Retrieved official connection string from Atlas API")
+                # Log the masked version for security
+                logger.debug(f"Connection string: {mask_connection_string(srv_string)}")
                 return srv_string
         
         logger.warning(f"Failed to retrieve connection string from API. Status code: {response.status_code}")
@@ -101,8 +124,10 @@ def construct_connection_string(cluster_name, provider_region=None, cluster_type
     hostname = f"{cluster_name}{region_suffix}.mongodb.net"
     
     # Include standard connection options
-    connection_string = f"mongodb+srv://admin:Password1@{hostname}/?retryWrites=true&w=majority"
+    connection_string = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{hostname}/?retryWrites=true&w=majority"
     return connection_string
+
+# Rest of the code remains the same...
 
 def validate_project_name(name):
     """
@@ -303,14 +328,14 @@ def create_free_cluster(project_id, cluster_name):
                         # Create database user
                         user_payload = {
                             "databaseName": "admin",
-                            "password": "Password1",
+                            "password": DB_PASSWORD,
                             "roles": [
                                 {
                                     "databaseName": "admin",
                                     "roleName": "atlasAdmin"
                                 }
                             ],
-                            "username": "admin"
+                            "username": DB_USER
                         }
                         
                         user_response = requests.post(
@@ -332,12 +357,14 @@ def create_free_cluster(project_id, cluster_name):
                                 # Fall back to the constructed connection string
                                 connection_string = construct_connection_string(cluster_name, "aws-us-east-1", "REPLICASET")
                                 
-                            logger.info(f"Cluster created successfully. Connection string: {connection_string}")
+                            # Log masked version of connection string
+                            logger.info(f"Cluster created successfully")
+                            logger.info(f"Connection string: {mask_connection_string(connection_string)}")
                             return True, connection_string
                             
                         elif user_response.status_code == 409 and "USER_ALREADY_EXISTS" in user_response.text:
                             # User already exists - log as warning and continue
-                            warning_message = f"Warning: Database user 'admin' already exists."
+                            warning_message = f"Warning: Database user '{DB_USER}' already exists."
                             logger.warning(warning_message)
                             logger.warning(f"Response details: {user_response.text}")
                             
@@ -349,8 +376,10 @@ def create_free_cluster(project_id, cluster_name):
                             else:
                                 # Fall back to the constructed connection string
                                 connection_string = construct_connection_string(cluster_name, "aws-us-east-1", "REPLICASET")
-                                
-                            logger.info(f"Cluster created successfully. Connection string: {connection_string}")
+                            
+                            # Log masked version of connection string
+                            logger.info(f"Cluster created successfully")
+                            logger.info(f"Connection string: {mask_connection_string(connection_string)}")
                             return True, connection_string
                             
                         else:
@@ -475,14 +504,14 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
                         # Create database user
                         user_payload = {
                             "databaseName": "admin",
-                            "password": "Password1",
+                            "password": DB_PASSWORD,
                             "roles": [
                                 {
                                     "databaseName": "admin",
                                     "roleName": "atlasAdmin"
                                 }
                             ],
-                            "username": "admin"
+                            "username": DB_USER
                         }
                         
                         user_response = requests.post(
@@ -503,13 +532,15 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
                             else:
                                 # Fall back to the constructed connection string with region
                                 connection_string = construct_connection_string(cluster_name, provider_region, "REPLICASET")
-                                
-                            logger.info(f"Paid cluster created successfully. Connection string: {connection_string}")
+                            
+                            # Log masked version of connection string
+                            logger.info(f"Paid cluster created successfully")
+                            logger.info(f"Connection string: {mask_connection_string(connection_string)}")
                             return True, connection_string
                         
                         elif user_response.status_code == 409 and "USER_ALREADY_EXISTS" in user_response.text:
                             # User already exists - log as warning and continue
-                            warning_message = f"Warning: Database user 'admin' already exists."
+                            warning_message = f"Warning: Database user '{DB_USER}' already exists."
                             logger.warning(warning_message)
                             logger.warning(f"Response details: {user_response.text}")
                             
@@ -521,8 +552,10 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
                             else:
                                 # Fall back to the constructed connection string with region
                                 connection_string = construct_connection_string(cluster_name, provider_region, "REPLICASET")
-                                
-                            logger.info(f"Paid cluster created successfully. Connection string: {connection_string}")
+                            
+                            # Log masked version of connection string
+                            logger.info(f"Paid cluster created successfully")
+                            logger.info(f"Connection string: {mask_connection_string(connection_string)}")
                             return True, connection_string
                             
                         else:
@@ -602,7 +635,10 @@ def main():
     elif args.command == "create-free-cluster":
         success, result = create_free_cluster(args.project_id, args.name)
         if success:
-            print(f"Free cluster created successfully. Connection string: {result}")
+            print(f"Free cluster created successfully.")
+            # Print masked connection string to console
+            print(f"Connection string: {mask_connection_string(result)}")
+            print("NOTE: Use the actual password when connecting to your database.")
             sys.exit(0)
         else:
             print(f"Failed to create free cluster: {result}")
@@ -611,7 +647,10 @@ def main():
     elif args.command == "create-paid-cluster":
         success, result = create_paid_cluster(args.project_id, args.name, args.instance_size, args.storage_size)
         if success:
-            print(f"Paid cluster created successfully. Connection string: {result}")
+            print(f"Paid cluster created successfully.")
+            # Print masked connection string to console
+            print(f"Connection string: {mask_connection_string(result)}")
+            print("NOTE: Use the actual password when connecting to your database.")
             sys.exit(0)
         else:
             print(f"Failed to create paid cluster: {result}")

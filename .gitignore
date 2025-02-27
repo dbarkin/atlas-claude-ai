@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Application specific files
+mongodb_atlas.log
+atlas_operations.log
+*.log.*
