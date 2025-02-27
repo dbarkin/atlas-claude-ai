@@ -57,3 +57,50 @@
 2025-02-26 16:01:38,594 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 16/60
 2025-02-26 16:02:09,215 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 17/60
 2025-02-26 16:02:41,263 - mongodb_atlas - ERROR - Failed to create database user. Status code: 409, Response: {"detail":"A user with username admin already exists.","error":409,"errorCode":"USER_ALREADY_EXISTS","parameters":["admin"],"reason":"Conflict"}
+2025-02-26 19:14:51,041 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 19:14:51,800 - mongodb_atlas - ERROR - Failed to create paid cluster. Status code: 400, Response: {"detail":"A cluster or serverless instance named clustertest02 is already present in group 67bf627255a2c8742205f583.","error":400,"errorCode":"DUPLICATE_CLUSTER_NAME","parameters":["cluster or serverless instance","clustertest02","67bf627255a2c8742205f583"],"reason":"Bad Request"}
+2025-02-26 19:21:02,973 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 19:21:03,984 - mongodb_atlas - INFO - Paid cluster creation initiated successfully
+2025-02-26 19:21:34,555 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 1/60
+2025-02-26 19:22:05,160 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 2/60
+2025-02-26 19:22:35,770 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 3/60
+2025-02-26 19:23:06,401 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 4/60
+2025-02-26 19:23:37,023 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 5/60
+2025-02-26 19:24:07,596 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 6/60
+2025-02-26 19:24:38,211 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 7/60
+2025-02-26 19:25:08,780 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 8/60
+2025-02-26 19:25:39,398 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 9/60
+2025-02-26 19:26:10,004 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 10/60
+2025-02-26 19:26:40,592 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 11/60
+2025-02-26 19:27:11,218 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 12/60
+2025-02-26 19:27:41,816 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 13/60
+2025-02-26 19:28:12,423 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 14/60
+2025-02-26 19:28:43,185 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 15/60
+2025-02-26 19:29:13,777 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 16/60
+2025-02-26 19:29:44,903 - mongodb_atlas - WARNING - Warning: Database user 'admin' already exists.
+2025-02-26 19:29:44,904 - mongodb_atlas - WARNING - Response details: {"detail":"A user with username admin already exists.","error":409,"errorCode":"USER_ALREADY_EXISTS","parameters":["admin"],"reason":"Conflict"}
+2025-02-26 19:29:44,904 - mongodb_atlas - INFO - Paid cluster created successfully. Connection string: mongodb+srv://admin:Password1@clustertest02.mongodb.net
+2025-02-26 19:41:51,624 - mongodb_atlas - INFO - Creating paid cluster: clustertest02 in project: 67bf627255a2c8742205f583 with instance size: M10
+2025-02-26 19:41:52,634 - mongodb_atlas - INFO - Paid cluster creation initiated successfully
+2025-02-26 19:42:23,219 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 1/60
+2025-02-26 19:42:53,867 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 2/60
+2025-02-26 19:43:24,483 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 3/60
+2025-02-26 19:43:55,049 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 4/60
+2025-02-26 19:44:25,642 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 5/60
+2025-02-26 19:44:56,242 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 6/60
+2025-02-26 19:45:26,841 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 7/60
+2025-02-26 19:45:57,407 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 8/60
+2025-02-26 19:46:28,022 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 9/60
+2025-02-26 19:46:58,628 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 10/60
+2025-02-26 19:47:29,293 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 11/60
+2025-02-26 19:47:59,901 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 12/60
+2025-02-26 19:48:30,491 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 13/60
+2025-02-26 19:49:01,075 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 14/60
+2025-02-26 19:49:31,645 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 15/60
+2025-02-26 19:50:02,243 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 16/60
+2025-02-26 19:50:32,823 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 17/60
+2025-02-26 19:51:03,454 - mongodb_atlas - INFO - Waiting for paid cluster to be ready. Current status: CREATING, Attempt: 18/60
+2025-02-26 19:51:34,572 - mongodb_atlas - WARNING - Warning: Database user 'admin' already exists.
+2025-02-26 19:51:34,573 - mongodb_atlas - WARNING - Response details: {"detail":"A user with username admin already exists.","error":409,"errorCode":"USER_ALREADY_EXISTS","parameters":["admin"],"reason":"Conflict"}
+2025-02-26 19:51:35,118 - mongodb_atlas - INFO - Retrieved official connection string from Atlas API
+2025-02-26 19:51:35,123 - mongodb_atlas - INFO - Paid cluster created successfully. Connection string: mongodb+srv://admin:Password1@clustertest02.nq8pf.mongodb.net

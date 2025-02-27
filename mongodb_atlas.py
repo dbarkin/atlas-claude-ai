@@ -32,6 +32,78 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
+def get_cluster_connection_string(project_id, cluster_name):
+    """
+    Get the official connection string from MongoDB Atlas API for a given cluster.
+    
+    Args:
+        project_id (str): The ID of the project containing the cluster
+        cluster_name (str): The name of the cluster
+        
+    Returns:
+        str or None: The official connection string if available, None otherwise
+    """
+    try:
+        response = requests.get(
+            f"{ATLAS_BASE_URL}/groups/{project_id}/clusters/{cluster_name}",
+            auth=HTTPDigestAuth(ATLAS_PUBLIC_KEY, ATLAS_PRIVATE_KEY),
+            headers=HEADERS
+        )
+        
+        if response.status_code == 200:
+            cluster_data = response.json()
+            connection_strings = cluster_data.get("connectionStrings", {})
+            
+            # Get the standard SRV connection string
+            srv_string = connection_strings.get("standardSrv")
+            
+            if srv_string:
+                # Replace the default username with admin and add the password
+                if "://" in srv_string:
+                    parts = srv_string.split("://")
+                    srv_string = f"{parts[0]}://admin:Password1@{parts[1]}"
+                
+                logger.info(f"Retrieved official connection string from Atlas API")
+                return srv_string
+        
+        logger.warning(f"Failed to retrieve connection string from API. Status code: {response.status_code}")
+        return None
+    except Exception as e:
+        logger.warning(f"Error retrieving connection string: {str(e)}")
+        return None
+
+def construct_connection_string(cluster_name, provider_region=None, cluster_type=None):
+    """
+    Construct a more accurate MongoDB Atlas connection string.
+    
+    Args:
+        cluster_name (str): The name of the cluster
+        provider_region (str, optional): The cloud provider region (e.g., "aws-us-east-1")
+        cluster_type (str, optional): The cluster type (e.g., "REPLICASET")
+        
+    Returns:
+        str: A formatted MongoDB Atlas connection string
+    """
+    # Extract region code from provider_region if available
+    region_suffix = ""
+    if provider_region:
+        if provider_region.startswith("aws-"):
+            region_code = provider_region.replace("aws-", "")
+            region_suffix = f".{region_code}"
+        elif provider_region.startswith("azure-"):
+            region_code = provider_region.replace("azure-", "")
+            region_suffix = f".{region_code}"
+        elif provider_region.startswith("gcp-"):
+            region_code = provider_region.replace("gcp-", "")
+            region_suffix = f".{region_code}"
+    
+    # Construct hostname using cluster name and region if available
+    hostname = f"{cluster_name}{region_suffix}.mongodb.net"
+    
+    # Include standard connection options
+    connection_string = f"mongodb+srv://admin:Password1@{hostname}/?retryWrites=true&w=majority"
+    return connection_string
+
 def validate_project_name(name):
     """
     Validate that the project name contains only English characters and numbers,
@@ -251,10 +323,36 @@ def create_free_cluster(project_id, cluster_name):
                         if user_response.status_code == 201:
                             logger.info("Database user created successfully")
                             
-                            # Get connection string
-                            connection_string = f"mongodb+srv://admin:Password1@{cluster_name}.mongodb.net"
+                            # Try to get official connection string from the API
+                            api_connection_string = get_cluster_connection_string(project_id, cluster_name)
+                            
+                            if api_connection_string:
+                                connection_string = api_connection_string
+                            else:
+                                # Fall back to the constructed connection string
+                                connection_string = construct_connection_string(cluster_name, "aws-us-east-1", "REPLICASET")
+                                
                             logger.info(f"Cluster created successfully. Connection string: {connection_string}")
                             return True, connection_string
+                            
+                        elif user_response.status_code == 409 and "USER_ALREADY_EXISTS" in user_response.text:
+                            # User already exists - log as warning and continue
+                            warning_message = f"Warning: Database user 'admin' already exists."
+                            logger.warning(warning_message)
+                            logger.warning(f"Response details: {user_response.text}")
+                            
+                            # Try to get official connection string from the API
+                            api_connection_string = get_cluster_connection_string(project_id, cluster_name)
+                            
+                            if api_connection_string:
+                                connection_string = api_connection_string
+                            else:
+                                # Fall back to the constructed connection string
+                                connection_string = construct_connection_string(cluster_name, "aws-us-east-1", "REPLICASET")
+                                
+                            logger.info(f"Cluster created successfully. Connection string: {connection_string}")
+                            return True, connection_string
+                            
                         else:
                             error_message = f"Failed to create database user. Status code: {user_response.status_code}, Response: {user_response.text}"
                             logger.error(error_message)
@@ -316,6 +414,10 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
         else:
             storage_size = 20
     
+    # Define the region to be used
+    region_name = "CA_CENTRAL_1"
+    provider_region = "aws-ca-central-1"
+    
     # Create paid cluster payload
     payload = {
         "name": cluster_name,
@@ -329,7 +431,7 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
                     "nodeCount": 3
                 },
                 "priority": 7,
-                "regionName": "CA_CENTRAL_1",
+                "regionName": region_name,
                 "providerName": "AWS"
             }]
         }]
@@ -393,10 +495,36 @@ def create_paid_cluster(project_id, cluster_name, instance_size, storage_size=No
                         if user_response.status_code == 201:
                             logger.info("Database user created successfully")
                             
-                            # Get connection string
-                            connection_string = f"mongodb+srv://admin:Password1@{cluster_name}.mongodb.net"
+                            # Try to get official connection string from the API
+                            api_connection_string = get_cluster_connection_string(project_id, cluster_name)
+                            
+                            if api_connection_string:
+                                connection_string = api_connection_string
+                            else:
+                                # Fall back to the constructed connection string with region
+                                connection_string = construct_connection_string(cluster_name, provider_region, "REPLICASET")
+                                
                             logger.info(f"Paid cluster created successfully. Connection string: {connection_string}")
                             return True, connection_string
+                        
+                        elif user_response.status_code == 409 and "USER_ALREADY_EXISTS" in user_response.text:
+                            # User already exists - log as warning and continue
+                            warning_message = f"Warning: Database user 'admin' already exists."
+                            logger.warning(warning_message)
+                            logger.warning(f"Response details: {user_response.text}")
+                            
+                            # Try to get official connection string from the API
+                            api_connection_string = get_cluster_connection_string(project_id, cluster_name)
+                            
+                            if api_connection_string:
+                                connection_string = api_connection_string
+                            else:
+                                # Fall back to the constructed connection string with region
+                                connection_string = construct_connection_string(cluster_name, provider_region, "REPLICASET")
+                                
+                            logger.info(f"Paid cluster created successfully. Connection string: {connection_string}")
+                            return True, connection_string
+                            
                         else:
                             error_message = f"Failed to create database user. Status code: {user_response.status_code}, Response: {user_response.text}"
                             logger.error(error_message)
